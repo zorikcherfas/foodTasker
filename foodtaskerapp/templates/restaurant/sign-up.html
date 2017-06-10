@@ -1,25 +1,14 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
 
-  <title>Document</title>
+{% extends 'base_singup.html' %}
+{% block title %} Sign Up {% endblock %}
 
-  <!-- Loading boostrap -->
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css'%}">
-  <script src="{% static 'js/bootstrap.min.js'%}">
+{% block heading %} Restaurant Sing-Up {% endblock %}
 
-  </script>
-</head>
-<body>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form }}
-    {{ restaurant_form}}
-    <button type="submit">Sing Up</button>
-  </form>
-
-</body>
-</html>
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ user_form }}
+  {{ restaurant_form}}
+  <button type="submit" class="btn btn-pink">Sing Up</button>
+</form>
+{% endblock %}
