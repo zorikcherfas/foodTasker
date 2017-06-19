@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
-from foodtaskerapp import views
+from foodtaskerapp import views , apis
 from django.contrib.auth import views as auth_views
 
 from django.conf.urls.static import static
@@ -33,4 +33,11 @@ urlpatterns = [
     url(r'^api/social/', include('rest_framework_social_oauth2.urls')),
     # /convert-token (sign in/ sign up)
     # /revoke-token (sign out)
+
+    # APIS for customers
+    url(r'^api/customer/restaurant/$', apis.customer_get_restaurant),
+    url(r'^api/customer/meals/(?P<restaurant_id>\d+)$', apis.customer_get_meals),
+    url(r'^api/customer/order/add/$', apis.customer_add_order),
+    url(r'^api/customer/order/lastes/$', apis.customer_get_lasts_order),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
