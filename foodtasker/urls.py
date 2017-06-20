@@ -29,11 +29,14 @@ urlpatterns = [
     url(r'^restaurant/order/$', views.restaurant_order, name = 'restaurant-order'),
     url(r'^restaurant/report/$', views.restaurant_report, name = 'restaurant-report'),
 
+
     # Sign In/ Sign Up/ Sign Out
     url(r'^api/social/', include('rest_framework_social_oauth2.urls')),
     # /convert-token (sign in/ sign up)
     # /revoke-token (sign out)
 
+    #API for restaurant
+    url(r'^api/restaurant/order/notification/(?P<last_request_time>.+)/$', apis.restaurant_order_notification),
     # APIS for customers
     url(r'^api/customer/restaurant/$', apis.customer_get_restaurant),
     url(r'^api/customer/meals/(?P<restaurant_id>\d+)$', apis.customer_get_meals),
