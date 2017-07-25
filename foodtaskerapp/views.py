@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from foodtaskerapp.forms import UserForm, RestaurantForm , UserFormForEdit ,MealForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from foodtaskerapp.models import Meal , Order, Driver
+from foodtaskerapp.models import Meal , Order, Driver,Customer
 from django.utils import timezone
 from django.db.models import Sum, Count, Case, When
 
@@ -34,6 +34,26 @@ def restaurant_account(request):
     "user_form": user_form,
     "restaurant_form":restaurant_form
     })
+
+# @login_required(login_url='/restaurant/sign-in/')
+def restaurant_customer(request):
+
+    restaurant = request.user.restaurant
+
+    # restaurant_customers_id = Customer.objects.filter(order__restaurant= restaurant).values('user').distinct()
+    orders = Order.objects.filter(restaurant = restaurant).order_by('customer__id')
+
+    customers = []
+    for order in orders:
+        # print(order.customer.user.get_full_name())
+        customers.append(order.customer)
+
+
+
+    return render(request,'restaurant/customer.html' ,{
+    "customers":customers
+    })
+
 
 @login_required(login_url='/restaurant/sign-in/')
 def restaurant_meal(request):

@@ -12,15 +12,20 @@ from django.views.decorators.csrf import csrf_exempt
 # Customer
 ###############
 def customer_get_restaurants(request):
-    restaurants = RestaurantSerializer(
-        Restaurant.objects.all().order_by("-id"),
-        many=True,
-        context =  {"request":request}
-        ).data
 
-    return JsonResponse({
-    "restaurants": restaurants
-    })
+    try:
+        restaurants = RestaurantSerializer(
+            Restaurant.objects.all().order_by("-id"),
+            many=True,
+            context =  {"request":request}
+            ).data
+
+        return JsonResponse({
+        "restaurants": restaurants
+        })
+
+    except AccessToken.DoesNotExist:
+        return JsonResponse ({"status":"falied","error":"access_token is wrong"})
 
 
 def customer_get_meals(request , restaurant_id):
@@ -38,6 +43,7 @@ def customer_get_meals(request , restaurant_id):
 @csrf_exempt
 def customer_add_order(request):
 
+    print("add ordre was called")
     if request.method == "POST":
         # Get token
         access_token = AccessToken.objects.get(token = request.POST.get("access_token"),
@@ -108,10 +114,13 @@ def customer_get_latest_order(request):
 # Restaurant
 ###############
 def restaurant_order_notification(request, last_request_time):
-    notification = Order.objects.filter(restaurant = request.user.restaurant,
-        created_at__gt = last_request_time).count()
+    # try:
+    #     notification = Order.objects.filter(restaurant = request.user.restaurant,created_at__gt = last_request_time).count()
+    #
+    #     return JsonResponse({"notification": notification})
+    # except AccessToken.DoesNotExist:
+    return JsonResponse ({"status":"falied","error":"access_token is wrong"})
 
-    return JsonResponse({"notification": notification})
 
 def customer_driver_location(request):
 
@@ -119,7 +128,6 @@ def customer_driver_location(request):
         expires__gt=timezone.now())
 
     customer = access_token.user.customer
-    print(customer)
     curret_order = Order.objects.filter(customer = customer , status = Order.ONTHEWAY).last()
     print(curret_order)
     location = curret_order.driver.location

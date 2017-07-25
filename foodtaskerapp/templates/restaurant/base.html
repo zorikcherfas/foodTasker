@@ -30,6 +30,8 @@
 {% url 'restaurant-meal' as restaurant_meal_url %}
 {% url 'restaurant-report' as restaurant_report_url %}
 {% url 'restaurant-account' as restaurant_account_url %}
+{% url 'restaurant-customer' as restaurant_customer_url %}
+
 
     <div class="text-center">
       <img class="img-circle" src="{{ MEDIA_URL }}{{ request.user.restaurant.logo }}"
@@ -47,6 +49,7 @@
       <span class="badge"></span></a>
       <a href="{% url 'restaurant-meal' %}" class="list-group-item {% if request.path == restaurant_meal_url %}active {% endif %}" >Meals</a>
       <a href="{% url 'restaurant-report' %}" class="list-group-item {% if request.path == restaurant_report_url %}active {% endif %}" >Report</a>
+      <a href="{% url 'restaurant-customer' %}" class="list-group-item {% if request.path == restaurant_customer_url %}active {% endif %}" >Customers</a>
 
 
       <span class="text-uppercase">Profile</span>
