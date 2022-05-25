@@ -15,7 +15,7 @@ oauth2-provider==0.0
 oauthlib==2.0.2
 olefile==0.44
 Pillow==4.1.1
-PyJWT==1.5.2
+PyJWT==2.4.0
 python-openid==2.2.5
 python-pptx==0.6.5
 python-social-auth==0.3.6
